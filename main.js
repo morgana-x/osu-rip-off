@@ -214,14 +214,13 @@ function spawnParticle(x, y, velocity)
 }
 function spawnTarget(x, y, radius, time)
 {
-
+	mouse_targets.push(
+		new MouseTarget(x,
+		y, radius,
+		time)
+	)
 	if (create_level_mode)
 	{
-		mouse_targets.push(
-			new MouseTarget(x,
-			y, radius,
-			time)
-		)
 		level_targets[video.currentTime] = new MouseTarget(x, y, radius, time)
 	}
 	
@@ -269,7 +268,10 @@ levelKeys = Object.keys(level_targets);
 console.log(level_targets);
 window.addEventListener('click', 	(evt)=> {
 	begin();
-	spawnTarget(mousePos.x, mousePos.y, 50 , 5000);
+	if (create_level_mode)
+	{
+		spawnTarget(mousePos.x, mousePos.y, 50 , 5000);
+	}
 })
 window.addEventListener('contextmenu', function(ev) {
     ev.preventDefault();
